@@ -1,0 +1,16 @@
+name: Deploy Quote API on Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    name: Deploy to Render
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Render deployment
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: curl --fail --show-error --silent --request POST "$RENDER_DEPLOY_HOOK"
